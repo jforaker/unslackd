@@ -7,7 +7,6 @@ lib-cov
 *.out
 *.pid
 *.gz
-.idea/
 pids
 logs
 results
@@ -15,4 +14,8 @@ _dev
 
 npm-debug.log
 api/node_modules
+api/server/index-compiled.js
+api/server/index-compiled.js.map
+api/server/api/index-compiled.js.map
+api/server/api/index-compiled.js
 client/node_modules

@@ -32,7 +32,6 @@ export default function() {
 					console.log(err);
 					reject(err)
 				}
-				//inspect(data.user, 'user data');
 				return resolve(callback(data.user))
 			})
 		})
@@ -52,7 +51,7 @@ export default function() {
 
 	api.get('/unread', (req, res) => {
 
-		inspect(req.query.token, 'req.query.token foo bar');
+		inspect(req.query.token, 'req.query.token:');
 
 		const token = req.query.token;
 		const slack = new Slack(token);
@@ -67,7 +66,9 @@ export default function() {
 		};
 
 		async.waterfall([
+
 			function (callback) {
+
 				slack.api('rtm.start', {mpim_aware: true}, function (err, response) {
 
 					if (!response || !response.ok || !_.isEmpty(err)) {
@@ -132,11 +133,10 @@ export default function() {
 				});
 			},
 			function (unreadsObj, callback) {
-				// unreads now equals {unreads} and arg2 now equals 'two'
+				// unreads now equals {unreadsObj}
 
 				_.each(unreadsObj.messages, (kinds, key) => {
 
-					//console.log('kinds', kinds);
 					console.log('key', key);
 
 					_.each(kinds, kind => {
@@ -152,14 +152,12 @@ export default function() {
 					});
 				});
 
-				Promise.all(promises).then(function (data) {
-					//inspect(data , 'data promises');
+				Promise.all(promises).then((data) => {
 					callback(null, unreadsObj)
 				});
 
 			}
 		], function (err, result) {
-			// result now equals 'done'
 
 			inspect(result, 'result ....');
 
