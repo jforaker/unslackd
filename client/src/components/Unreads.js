@@ -1,211 +1,173 @@
 import React from 'react-native';
 import _ from 'lodash';
 const NavigationBar = require('react-native-navbar');
-import Spinner from 'react-native-loading-spinner-overlay';
+const RefreshableListView = require('react-native-refreshable-listview');
+
+import EmptyView from './EmptyView.js'
+import LoadingView from './LoadingView.js'
+import Splash from './Splash'
+import MessageCell from './MessageCell'
+const xBtn = require('../../assets/close.png');
 
 const {
     Component,
     View,
     Text,
     StyleSheet,
-    TouchableHighlight
+    TouchableHighlight,
+    ListView,
+    Image
     } = React;
 
-var GiftedListView = require('react-native-gifted-listview');
-var GiftedSpinner = require('react-native-gifted-spinner');
-
+let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2, sectionHeaderHasChanged: (s1, s2) => s1 !== s2});
 
 export default class Unreads extends Component {
 
     constructor(props) {
         super(props);
-
-        this.renderNone = this.renderNone.bind(this);
-        this.renderUnreads = this.renderUnreads.bind(this);
-        this.check = this.check.bind(this);
-        this._onPress = this._onPress.bind(this);
+        this.dataSource = ds;
+        this.renderMessageCell = this.renderMessageCell.bind(this);
+        this.renderSectionHeaderView = this.renderSectionHeaderView.bind(this);
+        this.renderSeparatorView = this.renderSeparatorView.bind(this);
+        this.checkTotalAndRender = this.checkTotalAndRender.bind(this);
+        this.onPress = this.onPress.bind(this);
+        this.createRowsWithHeaders = this.createRowsWithHeaders.bind(this);
+        this.refreshList = this.refreshList.bind(this)
     }
 
     componentDidMount() {
-
         //dont call getUnreads again if coming from login
         if(!this.props.route.passProps){
             this.props.getUnreads(this.props.user.token, true);
         }
     }
 
-    renderNone() {
-        const { user } = this.props;
-
-        return (
-            <View>
-                <Text>Hey {user.unreads.user && user.unreads.user.name}, you have no unread messages. Lucky you.</Text>
-            </View>
-        )
-    }
-
-    renderUnreads() {
-        const { user } = this.props;
-
-        return (
-            <View style={styles.container}>
-                <View style={[styles.top,]}>
-                    <Text>Hey {user.unreads.user && user.unreads.user.name}, you have {user.unreads.total} unread messages :)</Text>
-                </View>
-                <GiftedListView
-                    rowView={this._renderRowView.bind(this)}
-                    onFetch={this._onFetch.bind(this)}
-                    firstLoader={true} // display a loader for the first fetching
-                    pagination={true} // enable infinite scrolling using touch to load more
-                    refreshable={true} // enable pull-to-refresh for iOS and touch-to-refresh for Android
-                    renderSeparator={ (sectionID, rowID) => this._renderSeparatorView(sectionID, rowID) }
-                    withSections={true} // enable sections
-                    sectionHeaderView={this._renderSectionHeaderView.bind(this)}
-                    customStyles={{
-                        paginationView: {
-                          backgroundColor: 'red',
-                        },
-                      }}
-                    refreshableTintColor="blue"
-                />
-            </View>
-        )
-    }
-
-    check() {
-
-        const { user } = this.props;
-
-        if(user.unreads && user.unreads.total > 0) {
-            return this.renderUnreads()
-        } else {
-            return this.renderNone()
+    componentWillReceiveProps(nextProps) {
+        if (!nextProps.user.logged_in && nextProps.user.logging_out) {
+            this.props.navigator.replace({
+                component: Splash,
+                passProps: {authed: false}
+            })
         }
     }
 
-    /**
-     * Will be called when refreshing
-     * Should be replaced by your own logic
-     * @param {number} page Requested page to fetch
-     * @param {function} callback Should pass the rows
-     * @param {object} options Inform if first load
-     */
-    _onFetch(page = 1, callback, options) {
+    refreshList(showLoader) {
+        this.props.getUnreads(this.props.user.token, showLoader);
+    }
+
+    onPress(channelId, ts, rowData) {
         const { user } = this.props;
+        this.props.markAsRead(user.token, channelId, ts, user.unreads, rowData);
+    }
 
-        let rows = {};
-        let header;
+    renderMessageCell(message) {
+        return (
+            <MessageCell key={message.ts} message={message} _onPress={this.onPress}/>
+        )
+    }
 
-        const format = (messages) => {
-            _.forEach(messages, function (channelsArray, key) {
+    createRowsWithHeaders(data) {
+        let dataBlob = {};
 
-                console.log('channelsArray', channelsArray);
-
-                if (!_.isEmpty(channelsArray)) {
-
-                    _.each(channelsArray, channelObj => {
-                        header = channelObj.name || 'ims';
-                        rows[header] = _.map(channelObj.JakesMessages.messages, msg => {
+        if (data && !_.isEmpty(data)) {
+            _.each(data.messages, (val, key) => {
+                _.each(val, channelObj => {
+                    if (channelObj.JakesMessages.messages.length) {
+                        const messages = _.map(channelObj.JakesMessages.messages, msg => {
+                            const from = _.find(data.users, {id: msg.user});
                             return {
                                 message: msg,
                                 channelId: channelObj.id,
-                                last_read: channelObj.last_read
+                                ts: msg.ts,
+                                type: key,
+                                from: from
                             }
-                        })
-                    });
-
-                    //for Groups as the header
-                    //header = _.capitalize(key);
-                    //rows[header] = _.map(value, item => item);
-                }
-            });
-            callback(rows);
-        };
-
-        if (options.firstLoad){
-
-            format(user.unreads.messages)
-
-        } else {
-
-            this.props.getUnreads(this.props.user.token, false).then(() => format(user.unreads.messages))
+                        });
+                        const header = channelObj.name || `dm from ${_.find(data.users, {id: channelObj.user}).name}`;
+                        dataBlob[header] = _.orderBy(messages, ['ts'], ['asc']);
+                    }
+                });
+            })
         }
+        return dataBlob
     }
 
-
-    /**
-     * When a row is touched
-     * @param {object} rowData Row data
-     */
-    _onPress(channelId, ts) {
-        console.log(channelId + ' pressed');
-
-        this.props.markAsRead(this.props.user.token, channelId, ts).then(res => console.log('res', res))
-    }
-
-
-    /**
-     * Render a row
-     * @param {object} rowData Row data
-     */
-    _renderRowView(rowData) {
-        console.log('rowData', rowData);
-        return (
-            <View
-                style={styles.row}
-                underlayColor='#c8c7cc'>
-                <View>
-                    <Text>{rowData.message.user} said {rowData.message.text}</Text>
-                    <TouchableHighlight
-                        onPress={() => this._onPress(rowData.channelId, rowData.last_read)}>
-                        <Text>mark read</Text>
-
-                    </TouchableHighlight>
-                </View>
-            </View>
-        );
-    }
-
-    _renderSeparatorView(sectionID, rowID) {
+    renderSeparatorView(sectionID, rowID) {
         return (
             <View key={`${sectionID}-${rowID}`} style={ styles.separator }/>
         );
     }
 
-    /**
-     * Render a row
-     * @param {object} rowData Row data
-     */
-    _renderSectionHeaderView(sectionData, sectionID) {
+    renderSectionHeaderView(sectionData, sectionID) {
+        const { markAsRead, user } = this.props;
+        const last = _.last(sectionData);
+
         return (
             <View style={styles.header} key={sectionID}>
-                <Text style={styles.headerTitle}>
+                <Text style={[styles.headerTitle]}>
                     {sectionID}
                 </Text>
+                <TouchableHighlight onPress={() => markAsRead(user.token, last.channelId, last.message.ts, user.unreads, last)}>
+                    <Text style={{color:'white'}}>
+                        mark all
+                    </Text>
+                </TouchableHighlight>
             </View>
         );
     }
 
+    checkTotalAndRender() {
+        const { user, getUnreads } = this.props;
+        const dataSource = this.dataSource.cloneWithRowsAndSections(this.createRowsWithHeaders(user.unreads));
+
+        if (user.unreads && user.unreads.total > 0) {
+            return (
+                <View style={styles.container}>
+
+                    <View style={[styles.top]}>
+                        <Text style={styles.topText}>
+                            <Text>Hey {user.unreads.user && user.unreads.user.name},
+                                <Text style={styles.boldText}> you have {user.unreads.total} unread messages </Text>
+                                :)
+                            </Text>
+                        </Text>
+                        {user.unreads_refreshing && <Text style={styles.topText}>refreshing...</Text>}
+                    </View>
+
+                    <RefreshableListView
+                        hasData={user.unreads.total > 0}
+                        dataSource={dataSource}
+                        renderRow={this.renderMessageCell}
+                        renderSectionHeader={this.renderSectionHeaderView}
+                        renderSeparator={(sectionID, rowID) => this.renderSeparatorView(sectionID, rowID)}
+                        isRefreshing={user.unreads_loading}
+                        loadData={() => getUnreads(user.token, false)}
+                        refreshDescription="Refreshing messages"
+                    />
+                </View>
+            )
+        } else {
+            return <EmptyView {...this.props} />
+        }
+    }
 
     render() {
 
-        const leftButtonConfig = {
+        const rightButton = {
             title: 'Logout',
-            handler: () => this.props.navigator.pop()
+            handler: () => this.props.doLogout()
         };
 
-        const Spinn = () => (
-            <View style={styles.top}>
-                <GiftedSpinner />
-            </View>
-        );
+        if (this.props.user.unreads_loading) {
+            return <LoadingView />
+        }
 
         return (
             <View style={styles.container}>
                 <NavigationBar
-                    title={{ title: 'Unreads', }}
-                    rightButton={leftButtonConfig}/>
-                {!this.props.user.unreads_loading ? this.check() : <Spinn/> }
+                    title={{title: 'unslackd'}}
+                    rightButton={rightButton}/>
+                {this.checkTotalAndRender()}
             </View>
         );
     }
@@ -214,38 +176,41 @@ export default class Unreads extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        //justifyContent: 'center',
-        //alignItems: 'center',
-        backgroundColor: 'lightyellow',
+        backgroundColor: 'white',
     },
     top: {
         flex: 0.25,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'lightyellow',
+        backgroundColor: 'lightgrey',
     },
-    navBar: {
-        height: 64,
-        backgroundColor: '#CCC'
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        padding: 20
     },
-    text: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
+    separator: {
+        height: 1,
+        backgroundColor: '#CCCCCC',
     },
     header: {
-        backgroundColor: '#50a4ff',
+        backgroundColor: '#254C87',
         padding: 10,
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     headerTitle: {
         color: '#fff',
+        alignSelf: 'flex-end',
+        flex: 1,
     },
-    separator: {
-        height: 11,
-        backgroundColor: '#CCC'
+    topText: {
+        fontSize: 14,
+        textAlign: 'center',
+        color: '#A9A9A9',
     },
-    row: {
-        padding: 10,
-        //height: 44,
+    boldText: {
+        fontWeight: 'bold',
     },
 });

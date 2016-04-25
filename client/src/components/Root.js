@@ -1,8 +1,6 @@
 
-import Spinner from 'react-native-loading-spinner-overlay';
-const GiftedSpinner = require('react-native-gifted-spinner');
-const NavigationBar = require('react-native-navbar');
 const store = require('react-native-simple-store');
+import LoadingView from './LoadingView.js'
 
 import React, {
     Component,
@@ -22,7 +20,6 @@ export default class Root extends Component {
     constructor(props) {
         super(props);
         this.renderScene = this.renderScene.bind(this);
-        this.renderLoading = this.renderLoading.bind(this);
     }
 
     componentWillMount() {
@@ -42,25 +39,15 @@ export default class Root extends Component {
         )
     }
 
-    renderLoading() {
-        return (
-            <View style={styles.container}>
-                <View style={styles.top}>
-                    <GiftedSpinner />
-                </View>
-            </View>
-        )
-    }
-
     render() {
 
         if (!this.props.app.loaded) {
-            return this.renderLoading()
+            return <LoadingView />
 
         } else {
-            const login = {component: Splash};
+            const splash = {component: Splash};
             const unreads = {component: Unreads};
-            const init = !this.props.user.logged_in ? login : unreads;
+            const init = !this.props.user.logged_in ? splash : unreads;
 
             return (
                 <Navigator
@@ -71,23 +58,3 @@ export default class Root extends Component {
         }
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'lightyellow',
-    },
-    top: {
-        flex: 0.25,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'lightyellow',
-    },
-    text: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-    },
-});

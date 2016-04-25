@@ -1,9 +1,9 @@
 import request from 'superagent'
-//import Promise from 'promise'
-//import _ from 'lodash'
+import Promise from 'bluebird'
+import _ from 'lodash'
 
-const API_URL = 'http://localhost:8080/api';
-
+const API_URL = 'http://localhost:3000/api';
+//const API_URL = 'https://unslackd-nwucvesaqu.now.sh/api';
 /**
  * err() called by Promise.catch(err)
  * @param err: 'reject' object passed in via handle() function
@@ -22,6 +22,7 @@ const err = (err) => {
  */
 
 const handle = (err, res, resolve, reject) => {
+
     if (err && err.status) {
         console.warn(`network err api ${res.req.method}: `, res.req.url, err);
         const badReq = (res.status === 400 && res.statusText === 'Bad Request');
@@ -85,9 +86,9 @@ const api = {
         authSlack: (code) => {
 
             /**
-             * Update user attributes
-             * @param id  (current user id)
-             * GET ${API_URL}/unread/
+             * Hit Slack 'oauth.access' with code param from redirect after successful auth from slack login
+             * @param code:  ?code=xxxxxx from slack redirect url
+             * POST ${API_URL}/auth/slack/callback/
              */
 
             const data = {
@@ -111,13 +112,15 @@ const api = {
             return doRequest(data);
         },
 
-        markAsRead: (token, channel, ts) => {
+        markAsRead: (token, channel, ts, unreads, kind) => {
 
             const data = {
                 params: {
                     token: token,
-                    channel: channel,
-                    ts: ts
+                    channelId: channel,
+                    ts: ts,
+                    unreads: unreads,
+                    kind: kind
                 },
                 url: `${API_URL}/mark`,
                 method: 'post'
