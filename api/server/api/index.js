@@ -92,7 +92,7 @@ export default function() {
 						seed += im.unread_count;
 						return seed
 					}, 0);
-					
+
 					const total = channelsUnread + groupsUnread + imsUnread + mpimsUnread;
 
 					inspect(total, 'total');
