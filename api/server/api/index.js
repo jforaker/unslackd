@@ -23,7 +23,7 @@ export default function() {
 			code: req.body.code
 		};
 
-		authSlack.api('oauth.access', opts, (err, data) => res.redirect('/api/unread?token=' + data.access_token))
+		authSlack.getApi('oauth.access', opts, (err, data) => res.redirect('/api/unread?token=' + data.access_token))
 	});
 
 	api.get('/unread', (req, res) => {
