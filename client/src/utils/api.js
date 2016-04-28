@@ -25,7 +25,7 @@ const handle = (err, res, resolve, reject) => {
 
     if (err && err.status) {
         console.warn(`network err api ${res.req.method}: `, res.req.url, err);
-        if (res.status >= 400 || res.status <= 500) {
+        if (res.status >= 400 && res.status <= 500) {
             resolve({error: res.body || 'error'});
         } else {
             reject(err.status)
