@@ -19,3 +19,10 @@ api/server/index-compiled.js.map
 api/server/api/index-compiled.js.map
 api/server/api/index-compiled.js
 client/node_modules
+website/node_modules
+website/bower_components
+website/dist/
+website/.tmp
+website/.sass-cache
+website/.env
+website/.idea/
