@@ -1,27 +1,12 @@
 {
-  "project": {
-    "name": "Foo Project",
-    "navLinks": [
-      {
-        "label": "Home",
-        "key": "home",
-        "href": "/"
-      },
-      {
-        "label": "Foo",
-        "key": "foo",
-        "href": "/foo"
-      },
-      {
-        "label": "bar",
-        "key": "bar",
-        "href": "/bar"
-      },
-      {
-        "label": "Baz",
-        "key": "baz",
-        "href": "/baz"
-      }
-    ]
-  }
+    "project": {
+        "name": "unslackd",
+        "navLinks": [
+            {
+                "label": "Home",
+                "key": "home",
+                "href": "/"
+            }
+        ]
+    }
 }

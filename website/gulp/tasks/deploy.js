@@ -1,26 +1,37 @@
 'use strict';
-
+require('dotenv').config();
 var gulp = require('gulp-help')(require('gulp'));
+var awspublish = require('gulp-awspublish');
 
-var rsync = require('gulp-rsync');
-var plumber = require('gulp-plumber');
+gulp.task('s3', function () {
 
-var config = require('./../config.js');
-var handleError = require('./../utils/handleError.js');
+  // create a new publisher using S3 options
+  // http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#constructor-property
+  var publisher = awspublish.create({
+    region: 'us-east-1',
+    params: {
+      Bucket: process.env['AWS_BUCKET_NAME']
+    },
+    "accessKeyId": process.env['AWS_ACCESS_KEY_ID'],
+    "secretAccessKey": process.env['AWS_SECRET_ACCESS_KEY']
+  });
 
-// Deploying via rsync/sftp 
-// Credentials are stored in .env file
+  // define custom headers
+  var headers = {
+    'Cache-Control': 'private, max-age=0, no-cache, no-store'
+  };
 
-// TODO plumber not working with this
+  return gulp.src('./dist/**')
+      // gzip, Set Content-Encoding headers and add .gz extension
+      .pipe(awspublish.gzip())
 
-gulp.task('deploy', 'Deploy to development enviroment (specified in `.env`)', function() {
-  return gulp.src(config.deploy.src)
-    .pipe(plumber(handleError))
-    .pipe(rsync(config.deploy.dev));
-});
+      // publisher will add Content-Length, Content-Type and headers specified above
+      // If not specified it will set x-amz-acl to public-read by default
+      .pipe(publisher.publish(headers))
 
-gulp.task('deploy:prod', 'Deploy to production enviroment (specified in `.env`)', function() {
-  return gulp.src(config.deploy.src)
-    .pipe(plumber(handleError))
-    .pipe(rsync(config.deploy.dist));
+      // create a cache file to speed up consecutive uploads
+      .pipe(publisher.cache())
+
+      // print upload updates to console
+      .pipe(awspublish.reporter());
 });

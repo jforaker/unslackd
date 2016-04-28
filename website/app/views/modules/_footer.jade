@@ -6,15 +6,5 @@ mixin githubStats(userName, repoName)
             iframe(src = "http://ghbtns.com/github-btn.html?user=#{userName}&repo=#{repoName}&type=follow&count=true", allowtransparency="true", frameborder="0", scrolling="0", width="120px", height="20")
 
 footer.footer
-
     div.container
-
-        //+githubStats('jforaker', 'SlackOverflow')
-
-        ul.footer-links
-            li
-                a(href='http://blog.getbootstrap.com') Blog
-            li
-                a(href='https://github.com/twitter/bootstrap/issues?state=open') Issues
-            li
-                a(href='https://github.com/twitter/bootstrap/wiki') Roadmap and changelog
+        +githubStats('jforaker', 'unslackd')
