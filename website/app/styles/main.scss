@@ -1,0 +1,24 @@
+
+// bower:scss
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+// endbower
+
+/* Mixins, Variables */
+//@import "modules/variables";
+//@import "modules/mixins";
+//@import "modules/fonts";
+//@import "modules/mixins";
+//@import "modules/base";
+
+.jumbotron {
+    padding-top: 60px;
+    text-align: center;
+    //font-family: $regular-font;
+    h1, h2, p {
+        color: rgb(246, 117, 50);
+    }
+
+    a {
+        border-bottom-color: #f7854a;
+    }
+}

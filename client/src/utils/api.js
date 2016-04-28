@@ -25,13 +25,7 @@ const handle = (err, res, resolve, reject) => {
 
     if (err && err.status) {
         console.warn(`network err api ${res.req.method}: `, res.req.url, err);
-        const badReq = (res.status === 400 && res.statusText === 'Bad Request');
-        const notFound = (res.status === 404 && res.statusText === 'Not Found');
-        const permissionDenied = (res.status === 403 && res.statusText === 'Forbidden');
-        const methodNotAllowed = (res.status === 405 && res.statusText === 'Method Not Allowed');
-        const requestEntityTooLarge = res.status === 413;
-
-        if (badReq || notFound || permissionDenied || methodNotAllowed || requestEntityTooLarge || (res.status === 500)) {
+        if (res.status >= 400 || res.status <= 500) {
             resolve({error: res.body || 'error'});
         } else {
             reject(err.status)
