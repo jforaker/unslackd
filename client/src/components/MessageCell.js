@@ -1,4 +1,5 @@
 import React from 'react-native';
+const Progress = require('react-native-progress');
 
 const {
     View,
@@ -8,8 +9,17 @@ const {
     Image
     } = React;
 
-const MessageCell = ({message, _onPress}) => (
-    <TouchableHighlight underlayColor={'#f3f3f2'} onPress={() => _onPress(message.channelId, message.ts, message)}>
+const stripText = (str) => {
+    //remove slack specific strings like <he
+    if (str === '') return `unslackd couldn't parse this message... prob not important :)`;
+    return String(str)
+        .replace(/</g, '')
+        .replace(/>/g, '');
+};
+
+const MessageCell = ({message, onPress, isRefreshing, timestampRefreshing}) => (
+
+    <TouchableHighlight underlayColor={'#F3FAFA'} onPress={() => onPress(message.channelId, message.ts, message)}>
         <View style={[styles.rowContainer]}>
             <Image style={styles.avatar} source={{uri: message.from.profile.image_192}} />
 
@@ -18,8 +28,22 @@ const MessageCell = ({message, _onPress}) => (
                     {message.from.name}
                 </Text>
                 <Text style={styles.right}>
-                    {message.message.text}
+                    {stripText(message.message.text)}
                 </Text>
+            </View>
+
+            <View style={styles.circles}>
+                {/*IOS ONLY!!*/}
+                {isRefreshing && (message.ts === timestampRefreshing) ?
+                 <Progress.Circle
+                    size={20}
+                    borderColor={'#46CFDF'}
+                    style={styles.progress}
+                    indeterminate={true}
+                    />
+                    : null
+                }
+
             </View>
         </View>
     </TouchableHighlight>
@@ -40,7 +64,7 @@ const styles = StyleSheet.create({
         marginLeft: 15,
     },
     rowDetailsContainer: {
-        flex: 1,
+        flex: 8,
     },
     right: {
         fontSize: 15,
@@ -51,6 +75,16 @@ const styles = StyleSheet.create({
     avatar: {
         width: 48,
         height: 48,
+    },
+
+    circles: {
+        flex: 0.75,
+        margin: 15,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    progress: {
+        opacity: 0.9
     },
 });
 

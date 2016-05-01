@@ -9,8 +9,9 @@ doctype html
 head
     meta(charset="utf-8")
     title= project.name
-    meta(name="description", content="")
-    meta(name="viewport", content="width=device-width")
+    meta(name="description", content="unslackd. Sign out of slack. Read your unread messages on your time. Mark them as read.")
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
     link(rel="shortcut icon", href="/favicon.ico")
     //- build:css /styles/vendor.min.css -->
     //- endbuild -->
@@ -20,30 +21,33 @@ head
     link(rel="stylesheet", href="/styles/main.css")
     //- endbuild -->
     //- build:js(.tmp) /scripts/modernizr.min.js -->
-    script(src="/scripts/plugins/modernizr.js")
     //- endbuild -->
-body
-
-    block link
-        -var currentPage = 'home'; //default
-
-    include ../modules/_nav
-
-    main
-        block content
-
-    include ../modules/_footer
     //- build:js(./app/) /scripts/vendor.min.js -->
     // bower:js
     script(src='../bower_components/jquery/dist/jquery.js')
     script(src='../bower_components/bootstrap-sass/assets/javascripts/bootstrap.js')
+    script(src='../bower_components/scrolly/public/js/scrolly.js')
+    script(src='../bower_components/skel/src/skel.js')
     // endbower
     //- endbuild -->
     //- build:js(.tmp) /scripts/plugins.min.js -->
     //- endbuild -->
     //- build:js(.tmp) /scripts/main.min.js -->
+    script(src="/scripts/jquery.scrollex.min.js")
+    script(src="/scripts/util.js")
     script(src="/scripts/main.js")
     //- endbuild -->
+body.is-loading
+
+    block link
+        -var currentPage = 'home'; //default.
+
+    include ../modules/_sidebar
+
+    block content
+
+    include ../modules/_footer
+
 
     script.
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -52,7 +56,5 @@ body
         })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
         ga('create', 'UA-45761431-5', 'auto');
         ga('send', 'pageview');
-
-
 
 | </html>

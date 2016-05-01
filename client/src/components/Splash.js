@@ -1,18 +1,21 @@
+import React, { Component, PropTypes } from 'react-native';
 
-import React, {
-    Component,
-    PropTypes,
+const {
     StyleSheet,
     Text,
+    Image,
     View,
     Linking,
     TouchableHighlight,
     AlertIOS
-} from 'react-native';
+    } = React;
 
 import {getParameterByName} from '../utils/helpers'
 import Button from 'apsl-react-native-button'
 import Unreads from '../components/Unreads'
+
+const logo = require('../../assets/unslack-logo-large.png');
+const bg = require('../../assets/bg.png');
 
 class Splash extends Component {
 
@@ -23,12 +26,12 @@ class Splash extends Component {
     }
 
     authCallback(err, token) {
-        var { setToken, authSlack, navigator } = this.props;
+        var { authSlack, navigator } = this.props;
 
         if (err) {
             console.warn(err)
         }
-        setToken(token);
+        console.log('token login---' , token);
         authSlack(token).then(() => navigator.push({component: Unreads, passProps: {authed: true}}))
     }
 
@@ -71,9 +74,14 @@ class Splash extends Component {
 
         return (
             <View style={styles.container}>
-                <View>
-                    <Text style={styles.text}>Hello</Text>
+                <View style={styles.bg}>
+                    <Image source={bg}/>
                 </View>
+
+                <View style={styles.logo}>
+                    <Image source={logo}/>
+                </View>
+
                 <Button style={styles.buttonStyle7}
                         textStyle={styles.textStyle8}
                         onPress={() => this.doAuth(this.authCallback)}>
@@ -94,25 +102,30 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'lightblue',
+        marginTop: -50,
+        paddingLeft: 50,
+        paddingRight: 50,
+        backgroundColor: 'white',
     },
-    text: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
+    bg: {
+        position: 'absolute',
+        left: 0
+    },
+    logo: {
+        paddingBottom: 30
     },
     buttonStyle7: {
-        borderColor: '#8e44ad',
+        borderColor: '#46CFDF',
         backgroundColor: 'white',
         borderRadius: 0,
-        borderWidth: 3,
+        borderWidth: 1,
         width: 200,
         alignSelf: 'center',
     },
     textStyle8: {
         fontFamily: 'Avenir Next',
         fontWeight: '500',
-        color: '#333',
+        color: '#A5A5A5',
     }
 });
 

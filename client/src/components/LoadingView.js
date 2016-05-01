@@ -2,19 +2,22 @@ import React, { Component } from 'react-native';
 
 const {
     View,
-    Text,
     StyleSheet,
     ActivityIndicatorIOS,
+    Image
     } = React;
 
+const bg = require('../../assets/bg.png');
 
 export default class LoadingView extends Component {
 
     render() {
         return (
             <View style={styles.loading}>
+                <View style={styles.bg}>
+                    <Image source={bg}/>
+                </View>
                 <ActivityIndicatorIOS size='large'/>
-                <Text>Loading...</Text>
             </View>
         );
     }
@@ -22,8 +25,13 @@ export default class LoadingView extends Component {
 
 const styles = StyleSheet.create({
     loading: {
-        flex: 2,
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    bg: {
+        position: 'absolute',
+        left: 0,
+        top: 150
     }
 });

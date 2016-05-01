@@ -13,6 +13,8 @@
 
 #import "RCTLinkingManager.h"
 
+#import "TestFairy.h"
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
@@ -22,6 +24,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   NSURL *jsCodeLocation;
+  [TestFairy begin:@"c90f9ede63243140912f759a8082647dde826e52"];
+
 
   /**
    * Loading JavaScript code - uncomment the one you want.
@@ -37,7 +41,7 @@
    * on the same Wi-Fi network.
    */
 
-  jsCodeLocation = [NSURL URLWithString:@"http://192.168.0.29:8081/index.ios.bundle?platform=ios&dev=true"];
+  jsCodeLocation = [NSURL URLWithString:@"http://192.168.0.6:8081/index.ios.bundle?platform=ios&dev=true"];
 
   /**
    * OPTION 2

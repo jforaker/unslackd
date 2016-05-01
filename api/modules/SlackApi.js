@@ -1,3 +1,4 @@
+const inspect = require('eyes').inspector();
 import Slack from 'slack-node';
 const Promise = require('bluebird');
 

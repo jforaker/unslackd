@@ -1,3 +1,4 @@
+require('react-native-browser-polyfill');
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Root from '../components/Root';

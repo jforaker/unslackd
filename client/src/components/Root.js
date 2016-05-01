@@ -12,6 +12,7 @@ import React, {
     TouchableHighlight,
 } from 'react-native';
 
+import Flash from './Flash'
 import Splash from './Splash'
 import Unreads from '../components/Unreads'
 
@@ -41,20 +42,23 @@ export default class Root extends Component {
 
     render() {
 
+        const splash = {component: Splash};
+        const unreads = {component: Unreads};
+        const init = !this.props.user.logged_in ? splash : unreads;
+
         if (!this.props.app.loaded) {
             return <LoadingView />
-
-        } else {
-            const splash = {component: Splash};
-            const unreads = {component: Unreads};
-            const init = !this.props.user.logged_in ? splash : unreads;
-
-            return (
-                <Navigator
-                    initialRoute={init}
-                    renderScene={this.renderScene}
-                />
-            );
         }
+
+        if (this.props.user.show_flash) {
+            return <Flash shouldShow={this.props.user.show_flash} {...this.props} />
+        }
+
+        return (
+            <Navigator
+                initialRoute={init}
+                renderScene={this.renderScene}
+            />
+        );
     }
 }

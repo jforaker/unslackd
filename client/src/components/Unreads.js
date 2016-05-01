@@ -7,7 +7,11 @@ import EmptyView from './EmptyView.js'
 import LoadingView from './LoadingView.js'
 import Splash from './Splash'
 import MessageCell from './MessageCell'
-const xBtn = require('../../assets/close.png');
+const markAll = require('../../assets/mark-all.png');
+const refresh = require('../../assets/refresh.png');
+
+var Swipeout = require('react-native-swipeout')
+
 
 const {
     Component,
@@ -20,6 +24,11 @@ const {
     } = React;
 
 let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2, sectionHeaderHasChanged: (s1, s2) => s1 !== s2});
+const headerColors = [
+    '#DF466A',
+    '#46CFDF',
+    '#DF8246'
+];
 
 export default class Unreads extends Component {
 
@@ -30,13 +39,13 @@ export default class Unreads extends Component {
         this.renderSectionHeaderView = this.renderSectionHeaderView.bind(this);
         this.renderSeparatorView = this.renderSeparatorView.bind(this);
         this.checkTotalAndRender = this.checkTotalAndRender.bind(this);
-        this.onPress = this.onPress.bind(this);
+        this.onMessagePress = this.onMessagePress.bind(this);
         this.createRowsWithHeaders = this.createRowsWithHeaders.bind(this);
         this.refreshList = this.refreshList.bind(this)
     }
 
     componentDidMount() {
-        //dont call getUnreads again if coming from login
+        //dont call getUnreads again if coming from login.
         if(!this.props.route.passProps){
             this.props.getUnreads(this.props.user.token, true);
         }
@@ -55,14 +64,42 @@ export default class Unreads extends Component {
         this.props.getUnreads(this.props.user.token, showLoader);
     }
 
-    onPress(channelId, ts, rowData) {
+    onMessagePress(channelId, ts, rowData) {
         const { user } = this.props;
         this.props.markAsRead(user.token, channelId, ts, user.unreads, rowData);
     }
 
     renderMessageCell(message) {
+        const { user } = this.props;
+        const isRefreshing = user.unreads_refreshing;
+        const timestampRefreshing = user.msg_timestamp;
+
+        var swipeoutBtns = [
+            {
+                text: 'Button'
+            }
+        ];
+
+        /*
+         <Swipeout
+         close
+         left={swipeoutBtns}
+         onOpen={this.onPress.bind(null, message.channelId, message.ts, message)}>
+         <MessageCell key={message.ts}
+         message={message}
+         isRefreshing={isRefreshing}
+         timestampRefreshing={timestampRefreshing}
+         />
+         </Swipeout>
+         */
+
+
         return (
-            <MessageCell key={message.ts} message={message} _onPress={this.onPress}/>
+            <MessageCell key={message.ts}
+                         message={message}
+                         onPress={this.onMessagePress}
+                         isRefreshing={isRefreshing}
+                         timestampRefreshing={timestampRefreshing}/>
         )
     }
 
@@ -73,8 +110,16 @@ export default class Unreads extends Component {
             _.each(data.messages, (val, key) => {
                 _.each(val, channelObj => {
                     if (channelObj.JakesMessages.messages.length) {
+                        //bot messages vary too much in data structure, too hard to parse
                         const messages = _.map(channelObj.JakesMessages.messages, msg => {
-                            const from = _.find(data.users, {id: msg.user});
+                            let from = {};
+
+                            if (msg.bot_id){
+                                _.assign(from, {name: 'Slackbot', profile: {image_192: msg.icons.image_64}});
+                            } else {
+                                from = _.find(data.users, {id: msg.user});
+                            }
+
                             return {
                                 message: msg,
                                 channelId: channelObj.id,
@@ -101,16 +146,17 @@ export default class Unreads extends Component {
     renderSectionHeaderView(sectionData, sectionID) {
         const { markAsRead, user } = this.props;
         const last = _.last(sectionData);
+        const key = last.ts;
+        const color = (last.from && last.from.color) ? `#${last.from.color}` : _.first(headerColors);
 
         return (
-            <View style={styles.header} key={sectionID}>
+            <View style={[styles.header, {backgroundColor: color}]} key={key}>
                 <Text style={[styles.headerTitle]}>
                     {sectionID}
                 </Text>
-                <TouchableHighlight onPress={() => markAsRead(user.token, last.channelId, last.message.ts, user.unreads, last)}>
-                    <Text style={{color:'white'}}>
-                        mark all
-                    </Text>
+                <TouchableHighlight underlayColor={'transparent'}
+                                    onPress={() => markAsRead(user.token, last.channelId, last.message.ts, user.unreads, last)}>
+                    <Image source={markAll} />
                 </TouchableHighlight>
             </View>
         );
@@ -131,7 +177,6 @@ export default class Unreads extends Component {
                                 :)
                             </Text>
                         </Text>
-                        {user.unreads_refreshing && <Text style={styles.topText}>refreshing...</Text>}
                     </View>
 
                     <RefreshableListView
@@ -142,7 +187,7 @@ export default class Unreads extends Component {
                         renderSeparator={(sectionID, rowID) => this.renderSeparatorView(sectionID, rowID)}
                         isRefreshing={user.unreads_loading}
                         loadData={() => getUnreads(user.token, false)}
-                        refreshDescription="Refreshing messages"
+                        refreshDescription=""
                     />
                 </View>
             )
@@ -154,7 +199,7 @@ export default class Unreads extends Component {
     render() {
 
         const rightButton = {
-            title: 'Logout',
+            title: 'Logout', //<Image source={refresh}/>
             handler: () => this.props.doLogout()
         };
 
@@ -165,13 +210,13 @@ export default class Unreads extends Component {
         return (
             <View style={styles.container}>
                 <NavigationBar
-                    title={{title: 'unslackd'}}
-                    rightButton={rightButton}/>
+                    rightButton={rightButton} />
                 {this.checkTotalAndRender()}
             </View>
         );
     }
 }
+
 
 const styles = StyleSheet.create({
     container: {
@@ -193,7 +238,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#CCCCCC',
     },
     header: {
-        backgroundColor: '#254C87',
         padding: 10,
         flex: 1,
         flexDirection: 'row',
@@ -201,7 +245,6 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         color: '#fff',
-        alignSelf: 'flex-end',
         flex: 1,
     },
     topText: {

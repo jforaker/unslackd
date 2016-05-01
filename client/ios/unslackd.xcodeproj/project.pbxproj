@@ -22,6 +22,14 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		E507B2251CD5A26B00FAB04A /* libTestFairy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E507B2221CD5A26B00FAB04A /* libTestFairy.a */; };
+		E507B2261CD5A26B00FAB04A /* upload-dsym.sh in Resources */ = {isa = PBXBuildFile; fileRef = E507B2241CD5A26B00FAB04A /* upload-dsym.sh */; };
+		E507B2281CD5A2BA00FAB04A /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E507B2271CD5A2BA00FAB04A /* CoreMedia.framework */; };
+		E507B22A1CD5A2C800FAB04A /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E507B2291CD5A2C800FAB04A /* CoreMotion.framework */; };
+		E507B22C1CD5A2D400FAB04A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E507B22B1CD5A2D400FAB04A /* AVFoundation.framework */; };
+		E507B22E1CD5A2E000FAB04A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E507B22D1CD5A2E000FAB04A /* SystemConfiguration.framework */; };
+		E507B2301CD5A2EB00FAB04A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E507B22F1CD5A2EB00FAB04A /* OpenGLES.framework */; };
+		E507B2631CD5C72900FAB04A /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E507B2621CD5C6F400FAB04A /* libART.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +110,13 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		E507B2611CD5C6F400FAB04A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E507B2321CD5C6F400FAB04A /* ART.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0CF68AC11AF0540F00FF9E5C;
+			remoteInfo = ART;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -126,6 +141,56 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		E507B2221CD5A26B00FAB04A /* libTestFairy.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFairy.a; sourceTree = "<group>"; };
+		E507B2231CD5A26B00FAB04A /* TestFairy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFairy.h; sourceTree = "<group>"; };
+		E507B2241CD5A26B00FAB04A /* upload-dsym.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "upload-dsym.sh"; sourceTree = "<group>"; };
+		E507B2271CD5A2BA00FAB04A /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		E507B2291CD5A2C800FAB04A /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		E507B22B1CD5A2D400FAB04A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		E507B22D1CD5A2E000FAB04A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		E507B22F1CD5A2EB00FAB04A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		E507B2321CD5C6F400FAB04A /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = ART.xcodeproj; sourceTree = "<group>"; };
+		E507B2351CD5C6F400FAB04A /* ARTCGFloatArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTCGFloatArray.h; sourceTree = "<group>"; };
+		E507B2361CD5C6F400FAB04A /* ARTContainer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTContainer.h; sourceTree = "<group>"; };
+		E507B2371CD5C6F400FAB04A /* ARTGroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTGroup.h; sourceTree = "<group>"; };
+		E507B2381CD5C6F400FAB04A /* ARTGroup.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTGroup.m; sourceTree = "<group>"; };
+		E507B2391CD5C6F400FAB04A /* ARTNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTNode.h; sourceTree = "<group>"; };
+		E507B23A1CD5C6F400FAB04A /* ARTNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTNode.m; sourceTree = "<group>"; };
+		E507B23B1CD5C6F400FAB04A /* ARTRenderable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTRenderable.h; sourceTree = "<group>"; };
+		E507B23C1CD5C6F400FAB04A /* ARTRenderable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTRenderable.m; sourceTree = "<group>"; };
+		E507B23D1CD5C6F400FAB04A /* ARTSerializablePath.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = ARTSerializablePath.js; sourceTree = "<group>"; };
+		E507B23E1CD5C6F400FAB04A /* ARTShape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTShape.h; sourceTree = "<group>"; };
+		E507B23F1CD5C6F400FAB04A /* ARTShape.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTShape.m; sourceTree = "<group>"; };
+		E507B2401CD5C6F400FAB04A /* ARTSurfaceView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTSurfaceView.h; sourceTree = "<group>"; };
+		E507B2411CD5C6F400FAB04A /* ARTSurfaceView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTSurfaceView.m; sourceTree = "<group>"; };
+		E507B2421CD5C6F400FAB04A /* ARTText.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTText.h; sourceTree = "<group>"; };
+		E507B2431CD5C6F400FAB04A /* ARTText.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTText.m; sourceTree = "<group>"; };
+		E507B2441CD5C6F400FAB04A /* ARTTextFrame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTTextFrame.h; sourceTree = "<group>"; };
+		E507B2461CD5C6F400FAB04A /* ARTBrush.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTBrush.h; sourceTree = "<group>"; };
+		E507B2471CD5C6F400FAB04A /* ARTBrush.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTBrush.m; sourceTree = "<group>"; };
+		E507B2481CD5C6F400FAB04A /* ARTLinearGradient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTLinearGradient.h; sourceTree = "<group>"; };
+		E507B2491CD5C6F400FAB04A /* ARTLinearGradient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTLinearGradient.m; sourceTree = "<group>"; };
+		E507B24A1CD5C6F400FAB04A /* ARTPattern.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTPattern.h; sourceTree = "<group>"; };
+		E507B24B1CD5C6F400FAB04A /* ARTPattern.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTPattern.m; sourceTree = "<group>"; };
+		E507B24C1CD5C6F400FAB04A /* ARTRadialGradient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTRadialGradient.h; sourceTree = "<group>"; };
+		E507B24D1CD5C6F400FAB04A /* ARTRadialGradient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTRadialGradient.m; sourceTree = "<group>"; };
+		E507B24E1CD5C6F400FAB04A /* ARTSolidColor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTSolidColor.h; sourceTree = "<group>"; };
+		E507B24F1CD5C6F400FAB04A /* ARTSolidColor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTSolidColor.m; sourceTree = "<group>"; };
+		E507B2501CD5C6F400FAB04A /* RCTConvert+ART.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RCTConvert+ART.h"; sourceTree = "<group>"; };
+		E507B2511CD5C6F400FAB04A /* RCTConvert+ART.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "RCTConvert+ART.m"; sourceTree = "<group>"; };
+		E507B2521CD5C6F400FAB04A /* ReactNativeART.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = ReactNativeART.js; sourceTree = "<group>"; };
+		E507B2541CD5C6F400FAB04A /* ARTGroupManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTGroupManager.h; sourceTree = "<group>"; };
+		E507B2551CD5C6F400FAB04A /* ARTGroupManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTGroupManager.m; sourceTree = "<group>"; };
+		E507B2561CD5C6F400FAB04A /* ARTNodeManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTNodeManager.h; sourceTree = "<group>"; };
+		E507B2571CD5C6F400FAB04A /* ARTNodeManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTNodeManager.m; sourceTree = "<group>"; };
+		E507B2581CD5C6F400FAB04A /* ARTRenderableManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTRenderableManager.h; sourceTree = "<group>"; };
+		E507B2591CD5C6F400FAB04A /* ARTRenderableManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTRenderableManager.m; sourceTree = "<group>"; };
+		E507B25A1CD5C6F400FAB04A /* ARTShapeManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTShapeManager.h; sourceTree = "<group>"; };
+		E507B25B1CD5C6F400FAB04A /* ARTShapeManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTShapeManager.m; sourceTree = "<group>"; };
+		E507B25C1CD5C6F400FAB04A /* ARTSurfaceViewManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTSurfaceViewManager.h; sourceTree = "<group>"; };
+		E507B25D1CD5C6F400FAB04A /* ARTSurfaceViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTSurfaceViewManager.m; sourceTree = "<group>"; };
+		E507B25E1CD5C6F400FAB04A /* ARTTextManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTTextManager.h; sourceTree = "<group>"; };
+		E507B25F1CD5C6F400FAB04A /* ARTTextManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTTextManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +205,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E507B2631CD5C72900FAB04A /* libART.a in Frameworks */,
+				E507B2301CD5A2EB00FAB04A /* OpenGLES.framework in Frameworks */,
+				E507B22E1CD5A2E000FAB04A /* SystemConfiguration.framework in Frameworks */,
+				E507B22C1CD5A2D400FAB04A /* AVFoundation.framework in Frameworks */,
+				E507B22A1CD5A2C800FAB04A /* CoreMotion.framework in Frameworks */,
+				E507B2281CD5A2BA00FAB04A /* CoreMedia.framework in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -147,6 +218,7 @@
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
+				E507B2251CD5A26B00FAB04A /* libTestFairy.a in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
@@ -232,6 +304,7 @@
 		13B07FAE1A68108700A75B9A /* unslackd */ = {
 			isa = PBXGroup;
 			children = (
+				E507B2211CD5A26B00FAB04A /* TestFairySDK-1.7.4 */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -287,6 +360,12 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				E507B2311CD5C6F400FAB04A /* ART */,
+				E507B22F1CD5A2EB00FAB04A /* OpenGLES.framework */,
+				E507B22D1CD5A2E000FAB04A /* SystemConfiguration.framework */,
+				E507B22B1CD5A2D400FAB04A /* AVFoundation.framework */,
+				E507B2291CD5A2C800FAB04A /* CoreMotion.framework */,
+				E507B2271CD5A2BA00FAB04A /* CoreMedia.framework */,
 				13B07FAE1A68108700A75B9A /* unslackd */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* unslackdTests */,
@@ -303,6 +382,90 @@
 				00E356EE1AD99517003FC87E /* unslackdTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		E507B2211CD5A26B00FAB04A /* TestFairySDK-1.7.4 */ = {
+			isa = PBXGroup;
+			children = (
+				E507B2221CD5A26B00FAB04A /* libTestFairy.a */,
+				E507B2231CD5A26B00FAB04A /* TestFairy.h */,
+				E507B2241CD5A26B00FAB04A /* upload-dsym.sh */,
+			);
+			path = "TestFairySDK-1.7.4";
+			sourceTree = "<group>";
+		};
+		E507B2311CD5C6F400FAB04A /* ART */ = {
+			isa = PBXGroup;
+			children = (
+				E507B2321CD5C6F400FAB04A /* ART.xcodeproj */,
+				E507B2351CD5C6F400FAB04A /* ARTCGFloatArray.h */,
+				E507B2361CD5C6F400FAB04A /* ARTContainer.h */,
+				E507B2371CD5C6F400FAB04A /* ARTGroup.h */,
+				E507B2381CD5C6F400FAB04A /* ARTGroup.m */,
+				E507B2391CD5C6F400FAB04A /* ARTNode.h */,
+				E507B23A1CD5C6F400FAB04A /* ARTNode.m */,
+				E507B23B1CD5C6F400FAB04A /* ARTRenderable.h */,
+				E507B23C1CD5C6F400FAB04A /* ARTRenderable.m */,
+				E507B23D1CD5C6F400FAB04A /* ARTSerializablePath.js */,
+				E507B23E1CD5C6F400FAB04A /* ARTShape.h */,
+				E507B23F1CD5C6F400FAB04A /* ARTShape.m */,
+				E507B2401CD5C6F400FAB04A /* ARTSurfaceView.h */,
+				E507B2411CD5C6F400FAB04A /* ARTSurfaceView.m */,
+				E507B2421CD5C6F400FAB04A /* ARTText.h */,
+				E507B2431CD5C6F400FAB04A /* ARTText.m */,
+				E507B2441CD5C6F400FAB04A /* ARTTextFrame.h */,
+				E507B2451CD5C6F400FAB04A /* Brushes */,
+				E507B2501CD5C6F400FAB04A /* RCTConvert+ART.h */,
+				E507B2511CD5C6F400FAB04A /* RCTConvert+ART.m */,
+				E507B2521CD5C6F400FAB04A /* ReactNativeART.js */,
+				E507B2531CD5C6F400FAB04A /* ViewManagers */,
+			);
+			name = ART;
+			path = "../node_modules/react-native/Libraries/ART";
+			sourceTree = "<group>";
+		};
+		E507B2331CD5C6F400FAB04A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E507B2621CD5C6F400FAB04A /* libART.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E507B2451CD5C6F400FAB04A /* Brushes */ = {
+			isa = PBXGroup;
+			children = (
+				E507B2461CD5C6F400FAB04A /* ARTBrush.h */,
+				E507B2471CD5C6F400FAB04A /* ARTBrush.m */,
+				E507B2481CD5C6F400FAB04A /* ARTLinearGradient.h */,
+				E507B2491CD5C6F400FAB04A /* ARTLinearGradient.m */,
+				E507B24A1CD5C6F400FAB04A /* ARTPattern.h */,
+				E507B24B1CD5C6F400FAB04A /* ARTPattern.m */,
+				E507B24C1CD5C6F400FAB04A /* ARTRadialGradient.h */,
+				E507B24D1CD5C6F400FAB04A /* ARTRadialGradient.m */,
+				E507B24E1CD5C6F400FAB04A /* ARTSolidColor.h */,
+				E507B24F1CD5C6F400FAB04A /* ARTSolidColor.m */,
+			);
+			path = Brushes;
+			sourceTree = "<group>";
+		};
+		E507B2531CD5C6F400FAB04A /* ViewManagers */ = {
+			isa = PBXGroup;
+			children = (
+				E507B2541CD5C6F400FAB04A /* ARTGroupManager.h */,
+				E507B2551CD5C6F400FAB04A /* ARTGroupManager.m */,
+				E507B2561CD5C6F400FAB04A /* ARTNodeManager.h */,
+				E507B2571CD5C6F400FAB04A /* ARTNodeManager.m */,
+				E507B2581CD5C6F400FAB04A /* ARTRenderableManager.h */,
+				E507B2591CD5C6F400FAB04A /* ARTRenderableManager.m */,
+				E507B25A1CD5C6F400FAB04A /* ARTShapeManager.h */,
+				E507B25B1CD5C6F400FAB04A /* ARTShapeManager.m */,
+				E507B25C1CD5C6F400FAB04A /* ARTSurfaceViewManager.h */,
+				E507B25D1CD5C6F400FAB04A /* ARTSurfaceViewManager.m */,
+				E507B25E1CD5C6F400FAB04A /* ARTTextManager.h */,
+				E507B25F1CD5C6F400FAB04A /* ARTTextManager.m */,
+			);
+			path = ViewManagers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -358,7 +521,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 4S7T5RV4DC;
+						DevelopmentTeam = 8GEN4V2CU7;
 					};
 				};
 			};
@@ -374,6 +537,10 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = E507B2331CD5C6F400FAB04A /* Products */;
+					ProjectRef = E507B2321CD5C6F400FAB04A /* ART.xcodeproj */;
+				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
@@ -494,6 +661,13 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		E507B2621CD5C6F400FAB04A /* libART.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libART.a;
+			remoteRef = E507B2611CD5C6F400FAB04A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -509,6 +683,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				E507B2261CD5A26B00FAB04A /* upload-dsym.sh in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -614,6 +789,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEAD_CODE_STRIPPING = NO;
@@ -625,6 +801,10 @@
 				);
 				INFOPLIST_FILE = unslackd/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TestFairySDK-1.7.4",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = org.jakeforaker.unslackd;
 				PRODUCT_NAME = unslackd;
@@ -636,6 +816,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				HEADER_SEARCH_PATHS = (
@@ -646,6 +827,10 @@
 				);
 				INFOPLIST_FILE = unslackd/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TestFairySDK-1.7.4",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = org.jakeforaker.unslackd;
 				PRODUCT_NAME = unslackd;

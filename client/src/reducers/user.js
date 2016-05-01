@@ -2,8 +2,10 @@ import {
     SET_TOKEN,
     CLEAR_TOKEN,
     GET_UNREADS_SUCCESS,
+    GET_UNREADS_ERROR,
     UNREADS_LOADING,
-    UNREADS_REFRESHING
+    UNREADS_REFRESHING,
+    SHOW_HIDE_FLASH
 } from '../actions/user';
 
 let initialState = {
@@ -11,7 +13,9 @@ let initialState = {
     logged_in: false,
     logging_out: false,
     unreads_loading: false,
+    show_flash: false,
     unreads_refreshing: false,
+    msg_timestamp: null,
     unreads: {}
 };
 
@@ -31,7 +35,8 @@ export default function user(state = initialState, action) {
                 ...state,
                 token: null,
                 logged_in: false,
-                logging_out: true
+                logging_out: true,
+                unreads: {}
             };
 
         case UNREADS_LOADING:
@@ -43,13 +48,27 @@ export default function user(state = initialState, action) {
         case UNREADS_REFRESHING:
             return {
                 ...state,
+                msg_timestamp: action.msg_timestamp,
                 unreads_refreshing: action.unreads_refreshing
             };
 
         case GET_UNREADS_SUCCESS:
             return {
                 ...state,
+                show_flash: false,
                 unreads: Object.assign({}, action.response)
+            };
+
+        case GET_UNREADS_ERROR:
+            return {
+                ...state,
+                show_flash: true
+            };
+
+        case SHOW_HIDE_FLASH:
+            return {
+                ...state,
+                show_flash: action.show_flash
             };
 
         default:

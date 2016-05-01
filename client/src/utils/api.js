@@ -98,6 +98,8 @@ const api = {
 
         getUnreads: (token) => {
 
+            console.log('token client' , token);
+
             const data = {
                 url: `${API_URL}/unread?token=${token}`,
                 method: 'get'
