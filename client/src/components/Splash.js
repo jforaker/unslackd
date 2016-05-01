@@ -1,13 +1,11 @@
 import React, { Component, PropTypes } from 'react-native';
+import LoadingView from './LoadingView.js'
 
 const {
     StyleSheet,
-    Text,
     Image,
     View,
-    Linking,
-    TouchableHighlight,
-    AlertIOS
+    Linking
     } = React;
 
 import {getParameterByName} from '../utils/helpers'
@@ -31,7 +29,6 @@ class Splash extends Component {
         if (err) {
             console.warn(err)
         }
-        console.log('token login---' , token);
         authSlack(token).then(() => navigator.push({component: Unreads, passProps: {authed: true}}))
     }
 
@@ -65,12 +62,17 @@ class Splash extends Component {
             if (!supported) {
                 console.log('Can\'t handle url: ' + url);
             } else {
+                this.props.userIsAuthenticating(true);
                 return Linking.openURL(url);
             }
         }).catch(err => console.warn('An error occurred during Linking.canOpenURL', err));
     }
 
     render() {
+
+        if (this.props.user.is_authenticating) {
+            return <LoadingView />
+        }
 
         return (
             <View style={styles.container}>

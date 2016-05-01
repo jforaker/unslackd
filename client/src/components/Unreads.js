@@ -10,7 +10,7 @@ import MessageCell from './MessageCell'
 const markAll = require('../../assets/mark-all.png');
 const refresh = require('../../assets/refresh.png');
 
-var Swipeout = require('react-native-swipeout')
+var Swipeout = require('react-native-swipeout');
 
 
 const {

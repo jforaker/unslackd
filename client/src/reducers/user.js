@@ -1,4 +1,5 @@
 import {
+    USER_IS_AUTHENTICATING,
     SET_TOKEN,
     CLEAR_TOKEN,
     GET_UNREADS_SUCCESS,
@@ -10,6 +11,7 @@ import {
 
 let initialState = {
     token: null,
+    is_authenticating: false,
     logged_in: false,
     logging_out: false,
     unreads_loading: false,
@@ -22,6 +24,12 @@ let initialState = {
 export default function user(state = initialState, action) {
 
     switch (action.type) {
+
+        case USER_IS_AUTHENTICATING:
+            return {
+                ...state,
+                is_authenticating: action.is_authenticating
+            };
 
         case SET_TOKEN:
             return {

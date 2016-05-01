@@ -10,6 +10,8 @@ export const UNREADS_LOADING = 'UNREADS_LOADING';
 export const CLEAR_TOKEN = 'CLEAR_TOKEN';
 export const UNREADS_REFRESHING = 'UNREADS_REFRESHING';
 export const SHOW_HIDE_FLASH = 'SHOW_HIDE_FLASH';
+export const USER_IS_AUTHENTICATING = 'USER_IS_AUTHENTICATING';
+
 
 export function setToken(token) {
     return {
@@ -22,9 +24,16 @@ export function doLogout() {
     return {type: CLEAR_TOKEN, token: null}
 }
 
+export function userIsAuthenticating(tf){
+    return dispatch => {
+        dispatch({type: USER_IS_AUTHENTICATING, is_authenticating: tf});
+    };
+}
+
 export function authSlackError(response) {
     console.log('authSlackError err' , response);
     return dispatch => {
+        dispatch(userIsAuthenticating(false));
         dispatch({type: GET_UNREADS_ERROR, response});
     };
 }
@@ -33,12 +42,14 @@ export function authSlackSuccess(response) {
     console.log('response authSlackSuccess' , response);
     store.save('token', response.token);
     return dispatch => {
+        dispatch(userIsAuthenticating(false));
         dispatch({type: SET_TOKEN, token: response.token});
         dispatch({type: GET_UNREADS_SUCCESS, response});
     };
 }
 
 export function authSlack(code) {
+
     return dispatch => {
         return api.user.authSlack(code).then(response => {
             if (!response.error) {
