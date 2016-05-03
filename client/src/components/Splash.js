@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react-native';
-import LoadingView from './LoadingView.js'
+import { LoadingView } from './LoadingView.js'
 
 const {
     StyleSheet,

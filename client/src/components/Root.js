@@ -1,6 +1,6 @@
 
 const store = require('react-native-simple-store');
-import LoadingView from './LoadingView.js'
+import { LoadingView } from './LoadingView.js'
 
 import React, {
     Component,

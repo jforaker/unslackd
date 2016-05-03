@@ -3,7 +3,7 @@ import Promise from 'bluebird'
 import _ from 'lodash'
 
 //const API_URL = 'http://localhost:3000/api';
-const API_URL = 'https://unslackd-tnkjfskteq.now.sh/api';
+const API_URL = 'https://unslackd-ubfzzroiai.now.sh/api';
 /**
  * err() called by Promise.catch(err)
  * @param err: 'reject' object passed in via handle() function

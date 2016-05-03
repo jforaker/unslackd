@@ -48,7 +48,7 @@ $(function () {
         $window.on('load', function () {
             window.setTimeout(function () {
                 $body.removeClass('is-loading');
-            }, 500);
+            }, 2500);
         });
 
         // Forms.

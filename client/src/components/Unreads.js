@@ -3,8 +3,9 @@ import _ from 'lodash';
 const NavigationBar = require('react-native-navbar');
 const RefreshableListView = require('react-native-refreshable-listview');
 
+import { Jumbotron } from './Jumbotron'
 import EmptyView from './EmptyView.js'
-import LoadingView from './LoadingView.js'
+import { LoadingView } from './LoadingView.js'
 import Splash from './Splash'
 import MessageCell from './MessageCell'
 const markAll = require('../../assets/mark-all.png');
@@ -111,13 +112,24 @@ export default class Unreads extends Component {
                 _.each(val, channelObj => {
                     if (channelObj.JakesMessages.messages.length) {
                         //bot messages vary too much in data structure, too hard to parse
+
+                        //const mm = _.without(users) without current users (nabil)
+
+                        console.log('channelObj.JakesMessages.messages', channelObj.JakesMessages.messages);
                         const messages = _.map(channelObj.JakesMessages.messages, msg => {
                             let from = {};
 
                             if (msg.bot_id){
-                                _.assign(from, {name: 'Slackbot', profile: {image_192: msg.icons.image_64}});
+                                const icon = msg.icons ? msg.icons.image_64 : 'https://placeimg.com/192/192/bot';
+                                _.assign(from, {name: 'Slackbot', profile: {image_192: icon}});
                             } else {
                                 from = _.find(data.users, {id: msg.user});
+                            }
+
+                            console.log('from', from);
+
+                            if (from){
+
                             }
 
                             return {
@@ -170,14 +182,7 @@ export default class Unreads extends Component {
             return (
                 <View style={styles.container}>
 
-                    <View style={[styles.top]}>
-                        <Text style={styles.topText}>
-                            <Text>Hey {user.unreads.user && user.unreads.user.name},
-                                <Text style={styles.boldText}> you have {user.unreads.total} unread messages </Text>
-                                :)
-                            </Text>
-                        </Text>
-                    </View>
+                    <Jumbotron user={user} />
 
                     <RefreshableListView
                         hasData={user.unreads.total > 0}
@@ -223,11 +228,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
     },
-    top: {
-        flex: 0.25,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
+
     row: {
         flexDirection: 'row',
         justifyContent: 'center',
@@ -247,12 +248,5 @@ const styles = StyleSheet.create({
         color: '#fff',
         flex: 1,
     },
-    topText: {
-        fontSize: 14,
-        textAlign: 'center',
-        color: '#A9A9A9',
-    },
-    boldText: {
-        fontWeight: 'bold',
-    },
+
 });

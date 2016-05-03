@@ -9,19 +9,14 @@ const {
 
 const bg = require('../../assets/bg.png');
 
-export default class LoadingView extends Component {
-
-    render() {
-        return (
-            <View style={styles.loading}>
-                <View style={styles.bg}>
-                    <Image source={bg}/>
-                </View>
-                <ActivityIndicatorIOS size='large'/>
-            </View>
-        );
-    }
-}
+export const LoadingView = () => (
+    <View style={styles.loading}>
+        <View style={styles.bg}>
+            <Image source={bg}/>
+        </View>
+        <ActivityIndicatorIOS size='large'/>
+    </View>
+);
 
 const styles = StyleSheet.create({
     loading: {
